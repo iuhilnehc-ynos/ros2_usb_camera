@@ -43,6 +43,8 @@ CameraDriver::CameraDriver(const rclcpp::NodeOptions &node_options) : Node("usb_
     camera_id = this->declare_parameter("camera_id", 0);
 
     rmw_qos_profile_t custom_qos_profile = rmw_qos_profile_sensor_data;
+    // TODO. It seems using `BEST_EFFOR` default is not working, at least not showing in rviz2
+    custom_qos_profile.reliability = RMW_QOS_POLICY_RELIABILITY_RELIABLE;
     camera_info_pub_ = image_transport::create_camera_publisher(this, "image", custom_qos_profile);
 
     cinfo_manager_ = std::make_shared<camera_info_manager::CameraInfoManager>(this);
@@ -78,8 +80,8 @@ std::shared_ptr<sensor_msgs::msg::Image> CameraDriver::ConvertFrameToMessage(cv:
     /* FIXME c++20 has std::endian */
     // ros_image.is_bigendian = (std::endian::native == std::endian::big);
     ros_image.is_bigendian = false;
-    ros_image.step = frame.cols * frame.elemSize();
-    size_t size = ros_image.step * frame.rows;
+    ros_image.step = frame.step;
+    size_t size = frame.step * frame.rows;
     ros_image.data.resize(size);
 
     if (frame.isContinuous())

@@ -34,8 +34,8 @@ SOFTWARE.
 
 #include "sensor_msgs/image_encodings.hpp"
 
-#include <camera_info_manager/camera_info_manager.h>
-#include <image_transport/image_transport.h>
+#include <camera_info_manager/camera_info_manager.hpp>
+#include <image_transport/image_transport.hpp>
 
 #include "opencv2/highgui/highgui.hpp"
 #include <opencv2/imgproc.hpp>
@@ -47,13 +47,13 @@ class CameraDriver : public rclcpp::Node {
 public:
     explicit CameraDriver(const rclcpp::NodeOptions&);
     ~CameraDriver() {};
-        
+
 private:
     rclcpp::TimerBase::SharedPtr timer_;
     cv::Mat frame;
     cv::Mat flipped_frame;
     cv::VideoCapture cap;
-    
+
     bool is_flipped;
 
     std::string frame_id_;
@@ -66,13 +66,13 @@ private:
 
     std::shared_ptr<camera_info_manager::CameraInfoManager> cinfo_manager_;
     image_transport::CameraPublisher camera_info_pub_;
-    
+
     std::shared_ptr<sensor_msgs::msg::Image> image_msg_;
-    
+
     std::shared_ptr<sensor_msgs::msg::Image> ConvertFrameToMessage(cv::Mat & frame);
-    
+
     void ImageCallback();
-    
+
 
 };
 } // namespace usb_camera_driver

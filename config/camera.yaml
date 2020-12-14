@@ -1,6 +1,6 @@
 image_width: 640
 image_height: 480
-camera_name: narrow_stereo
+camera_name: camera
 camera_matrix:
   rows: 3
   cols: 3
@@ -18,4 +18,3 @@ projection_matrix:
   rows: 3
   cols: 4
   data: [852.395142, 0.000000, 565.897630, 0.000000, 0.000000, 922.066223, 386.586250, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]
-  
